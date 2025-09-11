@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgre
+spec:
+  selector:
+    matchLabels:
+      app: postgre
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: postgre
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:13-trixie
+        env:
+        - name: POSTGRES_USER
+          value: user
+        - name: POSTGRES_PASSWORD
+          value: pass
+        - name: POSTGRES_DB
+          value: todo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-postgre
+spec:
+  selector: 
+    app: postgre
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+type: NodePort
