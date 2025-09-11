@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: api-service
+  template:
+    metadata:
+      labels:
+        name: api-service
+    spec:
+      containers:
+      - name: api-service-container
+        image: trdevops/python-app:api-service
+        env:
+        - name: POSTGRES_USER
+          value: user
+        - name: POSTGRES_PASSWORD
+          value: pass
+        - name: POSTGRES_DB
+          value: todo
+        - name: POSTGRES_HOST
+          value: service-postgre
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-api-service
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  type: NodePort
+  selector:
+    matchLabels:
+      name: api-service
