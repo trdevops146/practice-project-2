@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  postgresql:
+    image: postgres:13-trixie
+    environment:
+    - POSTGRES_USER=user      
+    - POSTGRES_PASSWORD=pass 
+  api_service:
+    image: api_service
+    build: ./api-service
+    depends_on: postgresql
+    ports:
+    - 5000:5000
+    environment:
+    - POSTGRES_HOST=postgresql
+    - POSTGRES_USER=user
+    - POSTGRES_PASSWORD=pass
+    - POSTGRES_DB=todo
+  frontend_service:
+    image: frontend_service
+    build: ./frontend-service
+    depends_on: api_service
+    ports:
+    - 8000:5001
+    environment:
+    - API_URL=http://api_service:5000
