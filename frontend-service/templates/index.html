@@ -1,2 +1,44 @@
 <head>
+</head><!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ToDo - Microservices Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; }
+    form { margin-bottom: 16px; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 8px 0; border-bottom: 1px solid #eee; }
+    .done { color: #888; text-decoration: line-through; }
+    .flash { color: red; }
+  </style>
 </head>
+<body>
+  <h1>ToDo App</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash">
+        {% for category, msg in messages %}
+          <div>{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form action="/add" method="post">
+    <input name="title" placeholder="New task" autofocus />
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    {% for t in todos %}
+      <li class="{{ 'done' if t.done else '' }}">
+        {{ t.title }}
+      </li>
+    {% else %}
+      <li>No todos yet</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
