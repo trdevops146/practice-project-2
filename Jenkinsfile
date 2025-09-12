@@ -29,9 +29,13 @@ pipeline {
         }
         stage('Deploy the kubernetes artifacts into the minikube cluster'){
             steps{
-                sh '''
-                
-                '''
+                withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+                    sh '''
+                    echo "$KUBECONFIG_CONTENT" > kubeconfig
+                    export KUBECONFIG=kubeconfig
+                    kubectl get pods
+                    '''
+                }
             }
         }
     }
