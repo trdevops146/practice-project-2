@@ -17,9 +17,9 @@ pipeline {
         }
         stage('Login to Dockerhub and push the image to Dockerhub'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'docker-hub-password', usernameVariable: 'docker-hub-user')]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                 sh '''
-                echo "$docker-hub-password" | docker login -u $docker-hub-user --password-stdin
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                 docker push trdevops/python-app:api-service
                 docker push trdevops/python-app:frontend-service
                 '''
