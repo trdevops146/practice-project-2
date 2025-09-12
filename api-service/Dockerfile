@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./api-service/ /app/
+COPY . /app/
 
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install -r requirements.txt
