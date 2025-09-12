@@ -17,7 +17,7 @@ spec:
         image: trdevops/python-app:front-end-service
         env:
         - name: API_URL
-          value: http://api_service:5000
+          value: http://svc-api-service:5000
 ---
 apiVersion: v1
 kind: Service
@@ -26,9 +26,8 @@ metadata:
 spec:
   ports:
   - port: 8000
-    targetPort: 5001
+    targetPort: 5000
     protocol: TCP
   type: NodePort
   selector:
-    matchLabels:
       name: front-end-service
