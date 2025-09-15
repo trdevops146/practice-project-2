@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: front-end-container
-        image: trdevops/python-app:front-end-service
+        image: trdevops/python-app:frontend-service
         env:
         - name: API_URL
           value: http://svc-api-service:5000
